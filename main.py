@@ -17,6 +17,9 @@ ENTRY = (
 
 def validate(line: str) -> str:
     """Enforce the sealed gate from RULES: 1-200 chars, single line, not blank."""
+    # Strip first: the gate counts the trimmed line, so surrounding
+    # whitespace must not push an otherwise valid entry over 200 chars.
+    # The newline check below then only ever sees interior line breaks.
     text = line.strip()
     if not 1 <= len(text) <= 200:
         raise ValueError(f"entry is {len(text)} chars, must be 1-200")
